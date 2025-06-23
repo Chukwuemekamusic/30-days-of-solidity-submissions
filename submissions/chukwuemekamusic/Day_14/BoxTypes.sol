@@ -16,6 +16,10 @@ enum BoxType {
  * @dev Library for BoxType enum utilities
  */
 library BoxTypeLib {
+    bytes32 constant HASH_BASIC = keccak256(abi.encodePacked("Basic"));
+    bytes32 constant HASH_PREMIUM = keccak256(abi.encodePacked("Premium"));
+    bytes32 constant HASH_TIMELOCKED = keccak256(abi.encodePacked("TimeLocked"));
+
     /**
      * @dev Convert BoxType enum to string
      * @param boxType The enum value
@@ -36,9 +40,9 @@ library BoxTypeLib {
     function fromString(string memory boxTypeString) internal pure returns (BoxType) {
         bytes32 hash = keccak256(abi.encodePacked(boxTypeString));
         
-        if (hash == keccak256(abi.encodePacked("Basic"))) return BoxType.Basic;
-        if (hash == keccak256(abi.encodePacked("Premium"))) return BoxType.Premium;
-        if (hash == keccak256(abi.encodePacked("TimeLocked"))) return BoxType.TimeLocked;
+        if (hash == HASH_BASIC) return BoxType.Basic;
+        if (hash == HASH_PREMIUM) return BoxType.Premium;
+        if (hash == HASH_TIMELOCKED) return BoxType.TimeLocked;
         
         revert("Invalid BoxType string");
     }
